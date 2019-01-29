@@ -1,7 +1,7 @@
 # Default values for mean-k8s.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-sampleApp:
+sampleAppCode:
   replicaCount: 1
   image:
     repository: bacherfl/mean-k8s

@@ -8,7 +8,7 @@ metadata:
    release: "{{ .Release.Name }}"
    heritage: "{{ .Release.Service }}"
 spec:
-  replicas: {{ .Values.sampleApp.replicaCount }}
+  replicas: {{ .Values.sampleAppCode.replicaCount }}
   template:
     metadata:
       labels:
@@ -19,8 +19,8 @@ spec:
         fsGroup: 1001
       containers:
       - name: {{ .Chart.Name }}
-        image: "{{ .Values.sampleApp.image.repository }}:{{ .Values.sampleApp.image.tag }}"
-        imagePullPolicy: {{ .Values.sampleApp.image.pullPolicy }}
+        image: "{{ .Values.sampleAppCode.image.repository }}:{{ .Values.sampleAppCode.image.tag }}"
+        imagePullPolicy: {{ .Values.sampleAppCode.image.pullPolicy }}
         env:
         - name: MONGODB_HOST
           value: {{ template "mongodb.fullname" . }}
@@ -32,21 +32,21 @@ spec:
               name: {{ template "mongodb.fullname" . }}
               key: mongodb-root-password
         - name: MONGODB_USERNAME
-          value: {{ default "" .Values.sampleApp.mongodb.mongodbUsername | quote }}
+          value: {{ default "" .Values.sampleAppCode.mongodb.mongodbUsername | quote }}
         - name: MONGODB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: {{ template "mongodb.fullname" . }}
               key: mongodb-password
         - name: MONGODB_DATABASE
-          value: {{ default "" .Values.sampleApp.mongodb.mongodbDatabase | quote }}
+          value: {{ default "" .Values.sampleAppCode.mongodb.mongodbDatabase | quote }}
         ports:
         - name: internalport
-          containerPort: {{ .Values.sampleApp.service.internalPort }}
+          containerPort: {{ .Values.sampleAppCode.service.internalPort }}
         livenessProbe:
           httpGet:
             path: /
-            port: {{ .Values.sampleApp.service.internalPort }}
+            port: {{ .Values.sampleAppCode.service.internalPort }}
           initialDelaySeconds: 180
           periodSeconds: 5
           timeoutSeconds: 5
@@ -54,7 +54,7 @@ spec:
         readinessProbe:
           httpGet:
             path: /
-            port: {{ .Values.sampleApp.service.internalPort }}
+            port: {{ .Values.sampleAppCode.service.internalPort }}
           initialDelaySeconds: 5
           periodSeconds: 5
           timeoutSeconds: 1
