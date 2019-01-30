@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: "{{ template "fullname" . }}-{{ .Values.sampleAppCode.service.name }}"
+  name: {{ template "fullname" . }}-sample-app-code
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
