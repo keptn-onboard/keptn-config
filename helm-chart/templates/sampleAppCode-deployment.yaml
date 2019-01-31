@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: {{ .Chart.Name }}-sample-app-code
   labels:
-   app: {{ .Chart.Name }}-selector-sample-app-code
-   chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-   release: "{{ .Release.Name }}"
-   heritage: "{{ .Release.Service }}"
+    app: {{ .Chart.Name }}-selector-sample-app-code
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
 spec:
   replicas: {{ .Values.sampleAppCode.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}
+        app: {{ .Chart.Name }}-selector-sample-app-code
         deployment: sample-app-code
     spec:
       containers:
