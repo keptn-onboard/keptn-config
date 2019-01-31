@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ .Chart.Name }}-sample-app-code
   labels:
-   app: {{ .Chart.Name }}-selector-app-code
+   app: {{ .Chart.Name }}-selector-sample-app-code
    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
    release: "{{ .Release.Name }}"
    heritage: "{{ .Release.Service }}"
@@ -15,9 +15,6 @@ spec:
         app: {{ .Chart.Name }}
         deployment: sample-app-code
     spec:
-      securityContext:
-        runAsUser: 1001
-        fsGroup: 1001
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.sampleAppCode.image.repository }}:{{ .Values.sampleAppCode.image.tag }}"
@@ -44,20 +41,5 @@ spec:
         ports:
         - name: internalport
           containerPort: {{ .Values.sampleAppCode.service.internalPort }}
-        livenessProbe:
-          httpGet:
-            path: /
-            port: {{ .Values.sampleAppCode.service.internalPort }}
-          initialDelaySeconds: 180
-          periodSeconds: 5
-          timeoutSeconds: 5
-          failureThreshold: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: {{ .Values.sampleAppCode.service.internalPort }}
-          initialDelaySeconds: 5
-          periodSeconds: 5
-          timeoutSeconds: 1
         resources:
 {{ toYaml .Values.resources | indent 12 }}
