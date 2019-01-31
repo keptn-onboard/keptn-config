@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "fullname" . }}-sample-app-code
+  name: {{ .Chart.Name }}-sample-app-code
   labels:
-   app: {{ template "fullname" . }}
+   app: {{ .Chart.Name }}-selector-app-code
    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
    release: "{{ .Release.Name }}"
    heritage: "{{ .Release.Service }}"
@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "fullname" . }}
+        app: {{ .Chart.Name }}
     spec:
       securityContext:
         runAsUser: 1001

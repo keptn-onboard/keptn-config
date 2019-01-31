@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "fullname" . }}-sample-app-code
+  name: {{ .Chart.Name }}-sample-app-code
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
@@ -12,4 +12,4 @@ spec:
     protocol: TCP
     name: {{ .Values.sampleAppCode.service.name }}
   selector:
-    app: {{ template "fullname" . }}
+    app: {{ .Chart.Name }}-selector-sample-app-code
