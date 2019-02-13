@@ -1,6 +1,26 @@
-sampleAppCode:
-    replicaCount: 1
-    image: {repository: bacherfl/mean-k8s, tag: 0.1.0, pullPolicy: IfNotPresent}
-    service: {name: mean-k8s, type: LoadBalancer, externalPort: 3000, internalPort: 3000}
-    resources: {limits: {cpu: 100m, memory: 128Mi}, requests: {cpu: 100m, memory: 128Mi}}
-    mongodb: {mongodbRootPassword: L8zLskMV+SY=, mongodbUsername: meanmapsapp, mongodbPassword: 6Z0VQHTrQqg, mongodbDatabase: meanmapsapp, persistence: {enabled: true, accessMode: ReadWriteOnce, size: 8Gi}}
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-DEnewApp
+  labels:
+    app: {{ .Chart.Name }}-selector-DEnewApp
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.newApp.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-selector-DEnewApp
+        deployment: DEnewApp
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.newApp.image.repository }}:{{ .Values.newApp.image.tag }}"
+        imagePullPolicy: {{ .Values.newApp.image.pullPolicy }}
+        ports:
+        - name: internalport
+          containerPort: {{ .Values.newApp.service.internalPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
