@@ -1,26 +1,15 @@
-apiVersion: extensions/v1beta1
-kind: Deployment
+apiVersion: v1
+kind: Service
 metadata:
   name: {{ .Chart.Name }}-DEnewApp
   labels:
-    app: {{ .Chart.Name }}-selector-DEnewApp
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
 spec:
-  replicas: {{ .Values.newApp.replicaCount }}
-  template:
-    metadata:
-      labels:
-        app: {{ .Chart.Name }}-selector-DEnewApp
-        deployment: DEnewApp
-    spec:
-      containers:
-      - name: {{ .Chart.Name }}
-        image: "{{ .Values.newApp.image.repository }}:{{ .Values.newApp.image.tag }}"
-        imagePullPolicy: {{ .Values.newApp.image.pullPolicy }}
-        ports:
-        - name: internalport
-          containerPort: {{ .Values.newApp.service.internalPort }}
-        resources:
-{{ toYaml .Values.resources | indent 12 }}
+  type: {{ .Values.newApp.service.type }}
+  ports:
+  - port: {{ .Values.newApp.service.externalPort }}
+    targetPort: {{ .Values.newApp.service.internalPort }}
+    protocol: TCP
+    name: {{ .Values.newApp.service.name }}
+  selector:
+    app: {{ .Chart.Name }}-selector-DEnewApp
