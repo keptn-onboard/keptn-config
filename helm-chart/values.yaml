@@ -4,5 +4,3 @@ sampleAppCode:
     service: {name: mean-k8s, type: LoadBalancer, externalPort: 3000, internalPort: 3000}
     resources: {limits: {cpu: 100m, memory: 128Mi}, requests: {cpu: 100m, memory: 128Mi}}
     mongodb: {mongodbRootPassword: L8zLskMV+SY=, mongodbUsername: meanmapsapp, mongodbPassword: 6Z0VQHTrQqg, mongodbDatabase: meanmapsapp, persistence: {enabled: true, accessMode: ReadWriteOnce, size: 8Gi}}
-newApp:
-    newApp: {replicaCount: 1, image: {repository: null, tag: null, pullPolicy: IfNotPresent}, service: {name: newApp, type: LoadBalancer, externalPort: 8080, internalPort: 8080}, resources: {limits: {cpu: 100m, memory: 128Mi}, requests: {cpu: 100m, memory: 128Mi}}}
