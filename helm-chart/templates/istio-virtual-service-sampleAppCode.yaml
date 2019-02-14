@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: keptn-onboard-sample-app-code-staging
+spec:
+  hosts:
+  - "sample-app-code.staging.keptn-onboard.146.148.77.102.xip.io"
+  gateways:
+  - keptn-onboard-gateway
+  http:
+    - route:
+      - destination:
+          host: mean-k8s-sample-app-code.staging.svc.cluster.local
+          subset: blue
+        weight: 0
+      - destination:
+          host: mean-k8s-sample-app-code.staging.svc.cluster.local
+          subset: green
+        weight: 100
