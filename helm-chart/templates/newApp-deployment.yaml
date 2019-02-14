@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name }}-DEnewApp
+  name: {{ .Chart.Name }}-new-app
   labels:
-    app: {{ .Chart.Name }}-selector-DEnewApp
+    app: {{ .Chart.Name }}-selector-new-app
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -12,8 +12,8 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ .Chart.Name }}-selector-DEnewApp
-        deployment: DEnewApp
+        app: {{ .Chart.Name }}-selector-new-app
+        deployment: new-app
     spec:
       containers:
       - name: {{ .Chart.Name }}
