@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-sample-app-code-green
+  labels:
+    app: {{ .Chart.Name }}-selector-sample-app-code
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.sampleAppCodeGreen.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-selector-sample-app-code
+        deployment: sample-app-code-green
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.sampleAppCodeGreen.image.repository }}:{{ .Values.sampleAppCodeGreen.image.tag }}"
+        imagePullPolicy: {{ .Values.sampleAppCodeGreen.image.pullPolicy }}
+        env:
+        - name: MONGODB_HOST
+          value: {{ template "mongodb.fullname" . }}
+        - name: MONGODB_PORT
+          value: "27017"
+        - name: MONGODB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "mongodb.fullname" . }}
+              key: mongodb-root-password
+        - name: MONGODB_USERNAME
+          value: {{ default "" .Values.sampleAppCodeGreen.mongodb.mongodbUsername | quote }}
+        - name: MONGODB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ template "mongodb.fullname" . }}
+              key: mongodb-password
+        - name: MONGODB_DATABASE
+          value: {{ default "" .Values.sampleAppCodeGreen.mongodb.mongodbDatabase | quote }}
+        ports:
+        - name: internalport
+          containerPort: {{ .Values.sampleAppCodeGreen.service.internalPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
