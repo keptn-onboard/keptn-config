@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Chart.Name }}-new-app
+  labels:
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+spec:
+  type: {{ .Values.newApp.service.type }}
+  ports:
+  - port: {{ .Values.newApp.service.externalPort }}
+    targetPort: {{ .Values.newApp.service.internalPort }}
+    protocol: TCP
+    name: {{ .Values.newApp.service.name }}
+  selector:
+    app: {{ .Chart.Name }}-selector-new-app
