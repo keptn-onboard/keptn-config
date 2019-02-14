@@ -52,3 +52,84 @@ newAppGreen:
         requests:
             cpu: 100m
             memory: 128Mi
+sampleAppCode:
+    replicaCount: 1
+    image:
+        repository: bacherfl/mean-k8s
+        tag: 0.1.0
+        pullPolicy: IfNotPresent
+    service:
+        name: sample-app
+        type: LoadBalancer
+        externalPort: 3000
+        internalPort: 3000
+    resources:
+        limits:
+            cpu: 100m
+            memory: 128Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
+    mongodb:
+        mongodbRootPassword: L8zLskMV+SY=
+        mongodbUsername: meanmapsapp
+        mongodbPassword: 6Z0VQHTrQqg
+        mongodbDatabase: meanmapsapp
+        persistence:
+            enabled: true
+            accessMode: ReadWriteOnce
+            size: 8Gi
+sampleAppCodeBlue:
+    replicaCount: 1
+    image:
+        repository: bacherfl/mean-k8s
+        tag: production-stable
+        pullPolicy: IfNotPresent
+    service:
+        name: sample-app-blue
+        type: LoadBalancer
+        externalPort: 3000
+        internalPort: 3000
+    resources:
+        limits:
+            cpu: 100m
+            memory: 128Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
+    mongodb:
+        mongodbRootPassword: L8zLskMV+SY=
+        mongodbUsername: meanmapsapp
+        mongodbPassword: 6Z0VQHTrQqg
+        mongodbDatabase: meanmapsapp
+        persistence:
+            enabled: true
+            accessMode: ReadWriteOnce
+            size: 8Gi
+sampleAppCodeGreen:
+    replicaCount: 1
+    image:
+        repository: bacherfl/mean-k8s
+        tag: 0.1.0
+        pullPolicy: IfNotPresent
+    service:
+        name: sample-app-green
+        type: LoadBalancer
+        externalPort: 3000
+        internalPort: 3000
+    resources:
+        limits:
+            cpu: 100m
+            memory: 128Mi
+        requests:
+            cpu: 100m
+            memory: 128Mi
+    mongodb:
+        mongodbRootPassword: L8zLskMV+SY=
+        mongodbUsername: meanmapsapp
+        mongodbPassword: 6Z0VQHTrQqg
+        mongodbDatabase: meanmapsapp
+        persistence:
+            enabled: true
+            accessMode: ReadWriteOnce
+            size: 8Gi
