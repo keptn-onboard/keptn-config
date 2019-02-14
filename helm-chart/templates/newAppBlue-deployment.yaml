@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}-new-app-blue
+  labels:
+    app: {{ .Chart.Name }}-selector-new-app
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ .Values.newAppBlue.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}-selector-new-app
+        deployment: new-app-blue
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: "{{ .Values.newAppBlue.image.repository }}:{{ .Values.newAppBlue.image.tag }}"
+        imagePullPolicy: {{ .Values.newAppBlue.image.pullPolicy }}
+        ports:
+        - name: internalport
+          containerPort: {{ .Values.newAppBlue.service.internalPort }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
