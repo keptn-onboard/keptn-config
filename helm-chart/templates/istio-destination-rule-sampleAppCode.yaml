@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: mean-k8s-sample-app-code-production-destination
+spec:
+  host: mean-k8s-sample-app-code.production.svc.cluster.local
+  subsets:
+  - name: blue
+    labels:
+      deployment: sample-app-code-blue
+  - name: green
+    labels:
+      deployment: sample-app-code-green
